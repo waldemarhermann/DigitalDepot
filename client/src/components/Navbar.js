@@ -16,6 +16,24 @@ import { Link as ReactLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { SiElectron } from 'react-icons/si';
 
+const links = [
+  { linkName: 'Products', path: '/products' },
+  { linkName: 'ShoppingCart', path: '/cart' },
+];
+
+const Navlink = ({ path, children }) => (
+  <Link
+    as={ReactLink}
+    to={path}
+    px={2}
+    py={2}
+    rounded='md'
+    _hover={{ textDecoration: 'none', bg: useColorModeValue('gray.200', 'gray.700') }}
+  >
+    {children}
+  </Link>
+);
+
 const Navbar = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -36,7 +54,17 @@ const Navbar = () => {
               <Text fontWeight='extrabold'>DigitalDepot</Text>
             </Flex>
           </Link>
+          <HStack>
+            {links.map((link) => (
+              <Navlink key={link.linkName} path={link.path}>{link.linkName}</Navlink>
+            ))}
+          </HStack>
         </HStack>
+        <Flex alignItems='center'>
+          <Navlink>
+            <Icon as={colorMode === 'light' ? MoonIcon : SunIcon} alignSelf='center' onClick={() => toggleColorMode()} />
+          </Navlink>
+        </Flex>
       </Flex>
     </Box>
   );
