@@ -54,18 +54,58 @@ const Navbar = () => {
               <Text fontWeight='extrabold'>DigitalDepot</Text>
             </Flex>
           </Link>
-          <HStack>
+          <HStack as='nav' spacing={4} display={{base: 'none', md: 'flex'}}>
             {links.map((link) => (
-              <Navlink key={link.linkName} path={link.path}>{link.linkName}</Navlink>
+              <Navlink key={link.linkName} path={link.path}>
+                {link.linkName}
+              </Navlink>
             ))}
           </HStack>
         </HStack>
+
         <Flex alignItems='center'>
           <Navlink>
-            <Icon as={colorMode === 'light' ? MoonIcon : SunIcon} alignSelf='center' onClick={() => toggleColorMode()} />
+            <Icon
+              as={colorMode === 'light' ? MoonIcon : SunIcon}
+              alignSelf='center'
+              onClick={() => toggleColorMode()}
+            />
           </Navlink>
+
+          <Button as={ReactLink} to='/login' p={2} fontSize='sm' fontWeight={400} variant='link'>
+            Sign in
+          </Button>
+
+          <Button
+            as={ReactLink}
+            to='/registration'
+            m={2}
+            display={{base: 'none', md: 'inline-flex' }}
+            fontSize='sm'
+            fontWeight={600}
+            _hover={{ bg: 'purple.400' }}
+            bg='purple.500'
+          >
+            Sign Up
+          </Button>
         </Flex>
       </Flex>
+
+      {isOpen ? (
+        <Box pb={4} display={{ md: 'none' }}>
+          <Stack as='nav' spacing={4}>
+            {links.map((link) => (
+              <Navlink key={link.linkName} path={link.path}>
+                {link.linkName}
+              </Navlink>
+            ))}
+            <Navlink key='sign up' path='/registration'>
+              Sign Up
+            </Navlink>
+          </Stack>
+        </Box>
+      ) : null}
+
     </Box>
   );
 };
